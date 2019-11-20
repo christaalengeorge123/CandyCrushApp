@@ -1,0 +1,88 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.app-name {
+    font-size: 28px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+}
+
+.has-gradient-text {
+    background: -webkit-linear-gradient(#f71372, #a42af5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.board{
+
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    // Override Automatic Minimum Size
+    // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
+    min-width: 0;
+    min-height: 0;
+    .board-bar{
+        background: rgba(gray,0.5);
+        padding: 8px 15px;
+    
+        .board-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(255,255,255);
+        }
+    }
+    .board-wrapper {
+        display: flex;
+        flex-grow: 1;
+        overflow-x: auto;
+        
+
+        .board-columns {
+            display: flex;
+            flex-grow: 1;
+           
+            
+            
+        }
+    }        
+}
+.login_box{
+  
+   
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 350px;
+    height: 350px;
+    
+
+    &:not(:first-child){
+        margin-left: 0;//margin will be equal at both sides
+    }
+    .column-title {
+        font-size: 20px;
+        font-weight: 800;
+        font-family: 'Lato', sans-serif;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+} 
+.login-button{
+   // position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+   
+}
