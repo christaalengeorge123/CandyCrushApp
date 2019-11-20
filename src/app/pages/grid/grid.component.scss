@@ -1,6 +1,4 @@
 .root {
-    display: flex;
-    flex-direction: column;
     height: 100%;
 }
 
@@ -17,11 +15,6 @@
 }
 
 .board{
-
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-
     // Override Automatic Minimum Size
     // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
     min-width: 0;
@@ -36,36 +29,14 @@
             color: rgb(255,255,255);
         }
     }
-    .board-wrapper {
-        display: flex;
-        flex-grow: 1;
-        overflow-x: auto;
-      
-        .board-rows{
-            display: flex;
-            flex-grow: 1;
-          
-            .board-row{
-                display: flex;
-                flex-direction: row;
-                flex-grow:1;
-                flex-basis: 0; // to force the columns to all be the same size, regardless of content
-
-              
-
-                &:not(:first-child){
-                    margin-left: 0;//margin will be equal at both sides
-            }
-           
-        }
-
-       
-    }        
-  }
 }
-.grid_box{
-  
-   
+
+.board-wrapper {
+    display: flex;
+    flex-direction: row;       
+}
+
+.grid_box{ 
     position: absolute;
     margin: auto;
     top: 0;
@@ -75,25 +46,10 @@
     width: 350px;
     height: 300px;
     background: rgba(white,0.5);
+}
 
-    &:not(:first-child){
-        margin-left: 0;//margin will be equal at both sides
-    }
-    .column-title {
-        font-size: 20px;
-        font-weight: 800;
-        font-family: 'Lato', sans-serif;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-}
-.tiles-container{
-    //flex-grow:1;
-    
-}
 .tiles{
-    display:flex;
-    padding:5px 5px;
+    padding:5px;
     height: 60px;
     width: 60px;
     background: white;
@@ -103,5 +59,16 @@
     margin-bottom:15px;
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.05),
     0 3px 14px 2px rgba(0, 0, 0, 0.05);
-    
-    }
+}
+
+.blueTiles {
+    background: blue;
+}
+
+.redTiles {
+    background: red;
+}
+
+.greenTiles {
+    background: green;
+}

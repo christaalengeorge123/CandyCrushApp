@@ -1,8 +1,7 @@
-
-import { Row } from './row.model';
+import { Candy } from './candy.model';
 
 export class Board {
-    constructor(public name: string, public columns: Row[]) {
+    constructor(public grid: Candy[][]) {
         
     }
 }

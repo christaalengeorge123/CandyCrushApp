@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Board } from 'src/app/models/board.model';
 import { Row } from 'src/app/models/row.model';
 import { Tiles } from 'src/app/models/tiles.model';
+import { Candy } from 'src/app/models/candy.model';
+import { v4 as uuid } from 'uuid';
+import { CandyType } from 'src/app/models/enum/candytype.enum';
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -9,28 +12,31 @@ import { Tiles } from 'src/app/models/tiles.model';
 })
 export class GridComponent implements OnInit {
 
+  board: Board = new Board([])
+  numOfRows: number = 3
+  numOfColumns: number = 3
   
-  constructor() { }
-  ngOnInit() {
+  constructor() { 
   }
- 
-  board: Board = new Board('CandyCrush', [
-    new Row(1, [
-      new Tiles(1, { src: 'app/resources/icons/candy1.png' }),
-      new Tiles(2, { src: 'app/resources/icons/candy2.png' }),
-      new Tiles(3, { src: 'app/resources/icons/candy3.png' })
-      ]),
-    new Row(2, [
-        new Tiles(1, { src: 'app/resources/icons/candy3.png' }),
-        new Tiles(2, { src: 'app/resources/icons/candy2.png' }),
-        new Tiles(3, { src: 'app/resources/icons/candy1.png' })
-      ]),
-    new Row(3, [
-        new Tiles(1, { src: 'app/resources/icons/candy2.png' }),
-        new Tiles(2, { src: 'app/resources/icons/candy1.png' }),
-        new Tiles(3, { src: 'app/resources/icons/candy4.png' })
-      ]) 
-  ]);
 
- 
+  getRandomCandy(): CandyType {
+    var value = Math.floor(Math.random() * Math.floor(3));
+    if (value == 0) {
+      return CandyType.Blue
+    } else if (value == 1) {
+      return CandyType.Green
+    } else if (value ==2) {
+      return CandyType.Red
+    }
+  }
+
+  ngOnInit() {
+    for (var row = 0; row < this.numOfRows; row ++) {
+      this.board.grid[row] = []
+      for (var column = 0; column < this.numOfColumns; column ++) {
+        var candy = new Candy(uuid(), this.getRandomCandy())
+        this.board.grid[row][column] = candy
+      }
+    }
+  }
 }

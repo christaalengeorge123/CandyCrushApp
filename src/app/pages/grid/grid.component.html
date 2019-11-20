@@ -1,34 +1,28 @@
 <div class="root">
-        <div class="navbar has-background-dark">
-          <div class="navbar-brand">
-            <div class="navbar-item">
-              <h1 class="app-name has-gradient-text">Candy Crush</h1>
-            </div>
-          </div>
-        </div>
-    
-        <div class="board">
-            <div class="board-bar">
-                <p class="board-name"><a href routerLink="register" >Register</a></p>
-            </div>
-            <div class="board-wrapper">
-                <div class="grid_box" > 
-                        <div class="board-rows" cdkDropListGroup>
-                               
-                                        <div class="tiles-container">
+  <div class="navbar has-background-dark">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <h1 class="app-name has-gradient-text">Candy Crush</h1>
+      </div>
+    </div>
+  </div>
 
-                                            <div class="tiles">blaa</div>
+  <div class="board">
+    <div class="board-bar">
+      <p class="board-name"><a href routerLink="register">Register</a></p>
+    </div>
+    <div class="board-wrapper">
+      <div class="grid_box board-rows">
 
-                                        </div> 
-                                        <div class="tiles-container">
-
-                                                <div class="tiles">blaa</div>
-    
-                                            </div> 
-                               
-                        </div>
-                </div>
+        <div class="grid_row" *ngFor="let candyRow of board.grid">
+            <div class="grid_cell" *ngFor="let candy of candyRow">
+              <div class="tiles {{candy.type}}Tiles"></div>
             </div>
         </div>
-      </div>  
-    
+        
+      </div>
+      
+  
+    </div>
+  </div>
+</div>
