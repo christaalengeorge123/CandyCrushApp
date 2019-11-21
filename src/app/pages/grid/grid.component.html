@@ -13,16 +13,18 @@
     </div>
     <div class="board-wrapper">
       <div class="grid_box board-rows">
-        <div cdkDropListGroup>
-          <div class="grid_row" 
-          cdkDropList
-          cdkDropListOrientation="horizontal" 
-          (cdkDropListDropped)="drop($event)" 
-          *ngFor="let candyRow of board.grid">
+        <div>
+          <div class="grid_row" *ngFor="let candyRow of board.grid">
 
-            <div class="grid_cell" *ngFor="let candy of candyRow" cdkDrag [cdkDragData]="candy">
+            <div class="grid_cell" *ngFor="let candy of candyRow">
 
-              <div class="tiles {{candy.type}}Tiles"></div>
+              <div class="tiles {{candy.type}}Tiles"  
+              (swipeleft)="onSwipeLeft($event, candy)" 
+              (swiperight)="onSwipeRight($event, candy)" 
+              (swipeup)="onSwipeUp($event, candy)" 
+              (swipedown)="onSwipeDown($event, candy)"
+              
+              ></div>
 
             </div>
           </div>

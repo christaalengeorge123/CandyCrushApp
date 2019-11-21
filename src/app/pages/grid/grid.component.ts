@@ -7,6 +7,7 @@ import { v4 as uuid } from 'uuid';
 import { CandyType } from 'src/app/models/enum/candytype.enum';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
@@ -47,9 +48,40 @@ export class GridComponent implements OnInit {
     }
   }
 
-  swipeLeft() {
-    console.log("swipeleft")
+  onSwipeLeft(event, candy: Candy) {
+    if (candy.y == 0) {
+      return
+    }
+
+    var row = this.board.grid[candy.x]
+    var leftSideCandy = row[candy.y - 1]    
+    moveItemInArray(row, candy.y, candy.y - 1);
+
+    candy.y -= 1
+    leftSideCandy.y += 1
   }
+  onSwipeRight(event, candy: Candy) {
+    var row = this.board.grid[candy.x]
+    if (candy.y == row.length - 1) {
+      return
+    }
+
+    var rightSideCandy = row[candy.y + 1]    
+    moveItemInArray(row, candy.y, candy.y + 1);
+
+    candy.y += 1
+    rightSideCandy.y -= 1
+  }
+
+  onSwipeUp(event, candy: Candy) {
+    if (candy.x == 0) {
+      return
+    }
+  }
+  onSwipeDown(event, candy: Candy) {
+    console.log("swiperight " + candy)
+  }
+
 
   // drop(event: CdkDragDrop<any>) {
   //   if (event.previousContainer === event.container) {
