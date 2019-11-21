@@ -15,7 +15,7 @@ import { Title } from '@angular/platform-browser';
 export class GridComponent implements OnInit {
 
   board: Board = new Board([])
-  numOfRows: number = 3
+  numOfRows: number = 2
   numOfColumns: number = 3
 
   constructor(
@@ -41,19 +41,25 @@ export class GridComponent implements OnInit {
       this.board.grid[row] = []
       for (var column = 0; column < this.numOfColumns; column++) {
         var candy = new Candy(row,column, this.getRandomCandy())
+        console.log(candy.type)
         this.board.grid[row][column] = candy
       }
     }
   }
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
-    }
+
+  swipeLeft() {
+    console.log("swipeleft")
   }
+
+  // drop(event: CdkDragDrop<any>) {
+  //   if (event.previousContainer === event.container) {
+  //     console.log("Equal = " + event + " " + event.previousIndex + event.currentIndex)
+  //     console.log(event.container.data)
+  //     //moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  //   } else {
+  //     console.log("Not Equal = " + event + " " + event.previousIndex + event.currentIndex)
+  //   }
+    
+  // }
 
 }
