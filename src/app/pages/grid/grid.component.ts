@@ -16,8 +16,8 @@ import { Title } from '@angular/platform-browser';
 export class GridComponent implements OnInit {
 
   board: Board = new Board([])
-  numOfRows: number = 2
-  numOfColumns: number = 3
+  numOfRows: number = 4
+  numOfColumns: number = 4
 
   constructor(
     private titleService: Title
@@ -41,7 +41,7 @@ export class GridComponent implements OnInit {
     for (var row = 0; row < this.numOfRows; row++) {
       this.board.grid[row] = []
       for (var column = 0; column < this.numOfColumns; column++) {
-        var candy = new Candy(row,column, this.getRandomCandy())
+        var candy = new Candy(row, column, this.getRandomCandy())
         console.log(candy.type)
         this.board.grid[row][column] = candy
       }
@@ -54,7 +54,7 @@ export class GridComponent implements OnInit {
     }
 
     var row = this.board.grid[candy.x]
-    var leftSideCandy = row[candy.y - 1]    
+    var leftSideCandy = row[candy.y - 1]
     moveItemInArray(row, candy.y, candy.y - 1);
 
     candy.y -= 1
@@ -66,7 +66,7 @@ export class GridComponent implements OnInit {
       return
     }
 
-    var rightSideCandy = row[candy.y + 1]    
+    var rightSideCandy = row[candy.y + 1]
     moveItemInArray(row, candy.y, candy.y + 1);
 
     candy.y += 1
@@ -77,10 +77,28 @@ export class GridComponent implements OnInit {
     if (candy.x == 0) {
       return
     }
+    var currentCandy = this.board.grid[candy.x][candy.y]
+    var candyaboveCurrent = this.board.grid[candy.x - 1][candy.y]
+    var currentType = currentCandy.type
+    currentCandy.type = candyaboveCurrent.type
+    candyaboveCurrent.type = currentType
   }
   onSwipeDown(event, candy: Candy) {
-    console.log("swiperight " + candy)
+    if (candy.x == this.numOfRows - 1) {
+      return
+    }
+    var currentCandy = this.board.grid[candy.x][candy.y]
+    var candyBelowCurrent = this.board.grid[candy.x + 1][candy.y]
+
+    //console.log("currentcandy"+currentCandy)
+    // Exchange the type of the two candies.
+    var currentType = currentCandy.type
+    currentCandy.type = candyBelowCurrent.type
+    candyBelowCurrent.type = currentType
   }
+
+
+
 
 
   // drop(event: CdkDragDrop<any>) {
@@ -91,7 +109,7 @@ export class GridComponent implements OnInit {
   //   } else {
   //     console.log("Not Equal = " + event + " " + event.previousIndex + event.currentIndex)
   //   }
-    
+
   // }
 
 }

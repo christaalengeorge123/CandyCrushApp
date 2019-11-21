@@ -44,8 +44,10 @@
     right: 0;
     bottom: 0;
     left: 0;
-    width: 390px;
-    height: 390px;
+    width: 350px;
+    height: 300px;
+    width: 255px;
+    height: 255px;
     background: rgba(white,0.5);
 }
 .grid_cell{
@@ -53,29 +55,48 @@
 }
 
 .tiles{
-    padding:25px;
-    
+    padding:5px;
+
     height: 60px;
     width: 60px;
     background: white;
     border-bottom: solid 1px #ddd;
     border-radius: 4px;
-    margin: 15px;
-    
+
+    margin-bottom:15px;
+    margin-right: 5px;
+    margin-bottom:5px;
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.05),
     0 3px 14px 2px rgba(0, 0, 0, 0.05);
 }
 
 .blueTiles {
-    background: blue;
+   // background: blue;
+   background-image: url('src/assets/blue.jpg');
+   
+   background-repeat: no-repeat;
+   background-position: center-top;
+   width: 60px; 
+   height: 60px; 
 }
 
 .redTiles {
-    background: red;
+    //background: red;
+    background-image: url('src/assets/redcolour.jpg');
+   
+    background-repeat: no-repeat;
+    background-position: center-top;
+    width: 60px; // any width
+    height: 60px; // any height
 }
 
 .greenTiles {
-    background: green;
+    background-image: url('src/assets/greencolour.png');
+    //background: green;
+    background-repeat: no-repeat;
+    background-position: center-top;
+    width: 60px; // any width
+    height: 60px; // any height
 }
 .grid_row{
     display: flex;
