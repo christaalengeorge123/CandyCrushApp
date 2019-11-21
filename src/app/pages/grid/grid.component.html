@@ -12,11 +12,21 @@
       <p class="board-name"><a href routerLink="register">Register</a></p>
     </div>
     <div class="board-wrapper">
-      <div class="grid_box board-rows">
+      <div class="grid_box board-rows"cdkDropListGroup>
 
-        <div class="grid_row" *ngFor="let candyRow of board.grid">
-            <div class="grid_cell" *ngFor="let candy of candyRow">
+          <div
+          cdkDropList
+          [cdkDropListData]="candy"
+          
+          (cdkDropListDropped)="drop($event.candy)">
+          <!--cdkDropList
+          [cdkDropListData]="candy" -->
+        <div class="grid_row" *ngFor="let candyRow of board.grid" >
+          
+           <div class="grid_cell" *ngFor="let candy of candyRow" cdkDrag>
+                
               <div class="tiles {{candy.type}}Tiles"></div>
+              
             </div>
         </div>
         
