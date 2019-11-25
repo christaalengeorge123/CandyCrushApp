@@ -22,6 +22,7 @@
     .board-bar{
         background: rgba(gray,0.5);
         padding: 8px 15px;
+        height: 10px;
     
         .board-name {
             font-size: 20px;
@@ -44,10 +45,10 @@
     right: 0;
     bottom: 0;
     left: 0;
-    width: 350px;
+    width: 450px;
     height: 300px;
-    width: 255px;
-    height: 255px;
+    width: 385px;
+    height: 385px;
     background: rgba(white,0.5);
 }
 .grid_cell{
@@ -72,7 +73,7 @@
 
 .blueTiles {
    // background: blue;
-   background-image: url('src/assets/blue.jpg');
+   background-image: url('src/assets/bluecandy.jpg');
    
    background-repeat: no-repeat;
    background-position: center-top;
@@ -82,7 +83,7 @@
 
 .redTiles {
     //background: red;
-    background-image: url('src/assets/redcolour.jpg');
+    background-image: url('src/assets/redcandy.jpg');
    
     background-repeat: no-repeat;
     background-position: center-top;
@@ -91,7 +92,31 @@
 }
 
 .greenTiles {
-    background-image: url('src/assets/greencolour.jpeg');
+    background-image: url('src/assets/Greencandy.png');
+    //background: green;
+    background-repeat: no-repeat;
+    background-position: center-top;
+    width: 60px; // any width
+    height: 60px; // any height
+}
+.yellowTiles {
+    background-image: url('src/assets/browncandy.png');
+    //background: green;
+    background-repeat: no-repeat;
+    background-position: center-top;
+    width: 60px; // any width
+    height: 60px; // any height
+}
+.violetTiles {
+    background-image: url('src/assets/Purplejelly.png');
+    //background: green;
+    background-repeat: no-repeat;
+    background-position: center-top;
+    width: 60px; // any width
+    height: 60px; // any height
+}
+.orangeTiles {
+    background-image: url('src/assets/candy2.png');
     //background: green;
     background-repeat: no-repeat;
     background-position: center-top;
