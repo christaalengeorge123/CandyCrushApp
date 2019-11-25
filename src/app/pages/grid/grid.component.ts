@@ -7,11 +7,63 @@ import { v4 as uuid } from 'uuid';
 import { CandyType } from 'src/app/models/enum/candytype.enum';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  keyframes
+} from '@angular/animations';
 
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss']
+  styleUrls: ['./grid.component.scss'],
+  animations: [
+    trigger('animateCandy', [
+      state('blue', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('bluecandy.jpg')"
+      })),
+      state('red', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('redcandy.jpg')"
+      })),
+      state('green', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('Greencandy.png')"
+      })),
+      state('yellow', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('browncandy.png')"
+      })),
+      state('violet', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('Purplejelly.png')"
+      })),
+      state('orange', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('candy2.png')"
+      })),
+      transition('* => *', [
+        animate('0.5s', keyframes([
+          style({ transform: 'translateY(25%)'}),
+          style({transform: 'translateY(50%)'}),
+          style({transform: 'translateY(75%)'}),
+          style({transform: 'translateY(100%)'})
+
+        ]
+        ))
+      ])
+    ])
+  ]
 })
 export class GridComponent implements OnInit {
 
