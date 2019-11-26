@@ -25,32 +25,32 @@ import {
       state('blue', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('bluecandy.jpg')"
+        'background-image': "url('assets/bluecandy.jpg')"
       })),
       state('red', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('redcandy.jpg')"
+        'background-image': "url('assets/redcandy.jpg')"
       })),
       state('green', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('Greencandy.png')"
+        'background-image': "url('assets/Greencandy.png')"
       })),
       state('yellow', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('browncandy.png')"
+        'background-image': "url('assets/browncandy.png')"
       })),
       state('violet', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('Purplejelly.png')"
+        'background-image': "url('assets/Purplejelly.png')"
       })),
       state('orange', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('candy2.png')"
+        'background-image': "url('assets/candy2.png')"
       })),
       transition('* => *', [
         animate('0.5s', keyframes([
