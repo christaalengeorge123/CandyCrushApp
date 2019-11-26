@@ -40,7 +40,8 @@ import {
       state('yellow', style({
         opacity: 1,
         transform: 'translateY(0%)',
-        'background-image': "url('assets/browncandy.png')"
+        'background-image': "url('assets/browncandy.png')",
+        
       })),
       state('violet', style({
         opacity: 1,
@@ -56,8 +57,11 @@ import {
         animate('0.5s', keyframes([
           style({ transform: 'translateY(25%)'}),
           style({transform: 'translateY(50%)'}),
+         
           style({transform: 'translateY(75%)'}),
-          style({transform: 'translateY(100%)'})
+          style(({opacity: 0})),
+          style({transform: 'translateY(100%)'}),
+          style(({opacity: 0})),
 
         ]
         ))

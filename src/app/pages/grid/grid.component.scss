@@ -73,7 +73,7 @@
 
 .blueTiles {
    // background: blue;
-   //background-image: url('src/assets/bluecandy.jpg');
+  // background-image: url('src/assets/bluecandy.jpg');
    
    background-repeat: no-repeat;
    background-position: center-top;
@@ -83,7 +83,7 @@
 
 .redTiles {
     //background: red;
-    //background-image: url('src/assets/redcandy.jpg');
+   // background-image: url('src/assets/redcandy.jpg');
    
     background-repeat: no-repeat;
     background-position: center-top;
@@ -92,7 +92,7 @@
 }
 
 .greenTiles {
-    //background-image: url('src/assets/Greencandy.png');
+   // background-image: url('src/assets/Greencandy.png');
     //background: green;
     background-repeat: no-repeat;
     background-position: center-top;
@@ -100,7 +100,7 @@
     height: 60px; // any height
 }
 .yellowTiles {
-    //background-image: url('src/assets/browncandy.png');
+   // background-image: url('src/assets/browncandy.png');
     //background: green;
     background-repeat: no-repeat;
     background-position: center-top;
@@ -108,7 +108,7 @@
     height: 60px; // any height
 }
 .violetTiles {
-    //background-image: url('src/assets/Purplejelly.png');
+   // background-image: url('src/assets/Purplejelly.png');
     //background: green;
     background-repeat: no-repeat;
     background-position: center-top;
@@ -116,7 +116,7 @@
     height: 60px; // any height
 }
 .orangeTiles {
-    //background-image: url('src/assets/candy2.png');
+   // background-image: url('src/assets/candy2.png');
     //background: green;
     background-repeat: no-repeat;
     background-position: center-top;
@@ -127,3 +127,11 @@
     display: flex;
     flex-direction: row;
 }
+.grid_cell:hover{
+   // background-color: yellow; /* make this whatever you want */
+    opacity: 0.3;
+    cursor: pointer;
+   // transform: scale(1.5); 
+    }
+    
+      
