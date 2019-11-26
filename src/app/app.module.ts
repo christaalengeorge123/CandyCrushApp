@@ -10,6 +10,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { GridComponent } from './pages/grid/grid.component';
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -27,7 +28,8 @@ export class MyHammerConfig extends HammerGestureConfig {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DragDropModule
+    DragDropModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {provide: HAMMER_GESTURE_CONFIG,
