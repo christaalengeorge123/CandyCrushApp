@@ -3,21 +3,79 @@ import { Board } from 'src/app/models/board.model';
 import { Row } from 'src/app/models/row.model';
 import { Tiles } from 'src/app/models/tiles.model';
 import { Candy } from 'src/app/models/candy.model';
-import { v4 as uuid } from 'uuid';
+//import { v4 as uuid } from 'uuid';
 import { CandyType } from 'src/app/models/enum/candytype.enum';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
 
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  keyframes
+} from '@angular/animations';
+import { timeout } from 'q';
+
 @Component({
   selector: 'app-grid',
   templateUrl: './grid.component.html',
-  styleUrls: ['./grid.component.scss']
+  styleUrls: ['./grid.component.scss'],
+  animations: [
+    // animation triggers go here
+    trigger('animateCandy', [
+      state('blue', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('bluecandy.jpg')"
+      })),
+      state('red', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('redcandy.jpg')"
+      })),
+      state('green', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('Greencandy.png')"
+      })),
+      state('yellow', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('browncandy.png')"
+      })),
+      state('violet', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('Purplejelly.png')"
+      })),
+      state('orange', style({
+        opacity: 1,
+        transform: 'translateY(0%)',
+        'background-image': "url('candy2.png')"
+      })),
+      transition('* => *', [
+        animate('0.5s', keyframes([
+          style({ transform: 'translateY(25%)'}),
+          style({transform: 'translateY(50%)'}),
+          style({transform: 'translateY(75%)'}),
+          style({transform: 'translateY(100%)'})
+
+        ]
+        
+        ))
+      ])
+      
+    ])
+  ]
 })
 export class GridComponent implements OnInit {
 
   board: Board = new Board([])
   numOfRows: number = 6
   numOfColumns: number = 6
+  score: number = 0
 
   constructor(
     private titleService: Title
@@ -77,7 +135,9 @@ export class GridComponent implements OnInit {
       candy.y += 1
       rightSideCandy.y -= 1
     }else{
-      this.shiftCandy();
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 2000);
     }
 
   }
@@ -104,7 +164,9 @@ export class GridComponent implements OnInit {
       candy.y -= 1
       leftSideCandy.y += 1
     }else{
-      this.shiftCandy();
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 2000);
     }
   }
 
@@ -121,7 +183,7 @@ export class GridComponent implements OnInit {
     var success = this.localCheck(0, candy.x, candy.y, 0, candy.type);
     var success2 = this.localCheck(0, candy.x - 1, candy.y, 0, this.board.grid[candy.x - 1][candy.y].type);
     if (success == 0 && success2 == 0) {
-      console.log(success);
+      //console.log(success);
       var currentCandy = this.board.grid[candy.x][candy.y]
       var candyBelowCurrent = this.board.grid[candy.x - 1][candy.y]
 
@@ -132,7 +194,9 @@ export class GridComponent implements OnInit {
       candyBelowCurrent.type = currentType
 
     }else{
-      this.shiftCandy();
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 2000);
     }
   }
   onSwipeDown(event, candy: Candy) {
@@ -162,7 +226,9 @@ export class GridComponent implements OnInit {
       candyBelowCurrent.type = currentType
 
     }else{
-      this.shiftCandy();
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 2000);
     }
   }
 
@@ -267,6 +333,7 @@ export class GridComponent implements OnInit {
         success = true;
       }
     }
+    this.wait(10)
 
 
     if (success == true) {
@@ -287,9 +354,22 @@ public shiftCandy() {
         //if u find a colored candy above E, swap them
         if (this.board.grid[temp-1][k].type != CandyType.nocolor) {
           //couldnt swap for some reason so just decided to swap colors
-          this.board.grid[mark][k].type = this.board.grid[temp-1][k].type;
-          this.board.grid[temp-1][k].type = CandyType.nocolor;
+
+            this.wait(5)
+            this.board.grid[mark][k].type = this.board.grid[temp-1][k].type;
+            this.board.grid[temp-1][k].type = CandyType.nocolor;
+          
+          
+
           break;
+
+
+          /*let j = temp;
+          while(j <= mark){
+            this.board.grid[j][k].type = this.board.grid[j-1][k].type;
+            this.board.grid[j-1][k].type = CandyType.nocolor;
+            j++;
+          }*/
         }
         //if u find another E on top, keep going up
         else {
@@ -297,22 +377,31 @@ public shiftCandy() {
         }
       }
       //if you made it all the way up to the top, make the whole row random candies
-      if (temp <= 0) {
-        for (let j = mark; j >= 0; j--) {
+      //this.wait(100)
+      if (temp < 0) {
+        //console.log(temp);
+        //for (let j = mark; j >= 0; j--) {
           //this.board.grid[j][k].type = this.getRandomCandy()
-        }
+          //console.log("j: "+j + ", k; " + k)
+        //}
       }
       else {
-        for (let j = 0; j < this.numOfRows; j++) {
-          if (this.board.grid[0][j].type == CandyType.nocolor) {
-            this.board.grid[0][j].type = this.getRandomCandy()
+          //this.wait(1000)
+          for (let j = 0; j < this.numOfRows; j++) {
+            if (this.board.grid[0][j].type == CandyType.nocolor) {
+              this.board.grid[0][j].type = this.getRandomCandy()
+              
+            }
           }
-        }
+        
+        
       }
 
     }
   }
-  this.checkGrid();
+  setTimeout(() => {
+    this.checkGrid();
+  }, 1500);
 }
 
 //returns an array of coordinates to delete
@@ -412,8 +501,17 @@ if(removeCandyArr.length != 0){
   for(let i =0;i <newRemoveCandyArr.length;i++){
       this.board.grid[newRemoveCandyArr[i][0]][newRemoveCandyArr[i][1]].type = CandyType.nocolor;
   }
- this.shiftCandy();
+  setTimeout(() => {
+    this.shiftCandy();
+  }, 1500);
 }
+}
+public wait(ms) {
+  var start = Date.now(),
+      now = start;
+  while (now - start < ms) {
+    now = Date.now();
+  }
 }
 
 }
