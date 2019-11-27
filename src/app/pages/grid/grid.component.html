@@ -4,6 +4,7 @@
       <div class="navbar-item">
         <h1 class="app-name has-gradient-text">Candy Crush</h1>
       </div>
+      
     </div>
   </div>
 
@@ -12,6 +13,17 @@
      <!--  <p class="board-name"><a href routerLink="register">Register</a></p>-->
     </div>
     <div class="board-wrapper">
+        <div class = "game-stats">
+          <div>
+            <p>Target Score: {{this.scoreToBeat}}</p>
+          </div>
+          <div>
+            <p>Current Score: {{this.score}}</p>
+          </div>
+          <div>
+            <p>Turns Left: {{this.turns}}</p>
+          </div>
+        </div>
       <div class="grid_box board-rows">
         <div>
           <div class="grid_row" *ngFor="let candyRow of board.grid">

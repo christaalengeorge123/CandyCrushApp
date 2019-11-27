@@ -76,6 +76,8 @@ export class GridComponent implements OnInit {
   numOfRows: number = 6
   numOfColumns: number = 6
   score: number = 0
+  turns: number = 10
+  scoreToBeat: number = 50
 
   constructor(
     private titleService: Title
@@ -106,7 +108,7 @@ export class GridComponent implements OnInit {
       this.board.grid[row] = []
       for (var column = 0; column < this.numOfColumns; column++) {
         var candy = new Candy(row, column, this.getRandomCandy())
-        console.log(candy.type)
+        //console.log(candy.type)
         this.board.grid[row][column] = candy
       }
     }
@@ -114,7 +116,7 @@ export class GridComponent implements OnInit {
   }
 
   onSwipeLeft(event, candy: Candy) {
-    if (candy.y == 0) {
+    if (candy.y == 0 || this.turns == 0) {
       return
     }
 
@@ -135,15 +137,17 @@ export class GridComponent implements OnInit {
       candy.y += 1
       rightSideCandy.y -= 1
     }else{
+      this.turns--;
+      console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 2000);
+      }, 1000);
     }
 
   }
   onSwipeRight(event, candy: Candy) {
     var row = this.board.grid[candy.x]
-    if (candy.y == row.length - 1) {
+    if (candy.y == row.length - 1 || this.turns == 0) {
       return
 
 
@@ -164,14 +168,16 @@ export class GridComponent implements OnInit {
       candy.y -= 1
       leftSideCandy.y += 1
     }else{
+      this.turns--;
+      console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 2000);
+      }, 1000);
     }
   }
 
   onSwipeUp(event, candy: Candy) {
-    if (candy.x == 0) {
+    if (candy.x == 0 || this.turns == 0) {
       return
     }
     var currentCandy = this.board.grid[candy.x][candy.y]
@@ -194,13 +200,16 @@ export class GridComponent implements OnInit {
       candyBelowCurrent.type = currentType
 
     }else{
+      this.turns--;
+      console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 2000);
+      }, 1000);
     }
   }
   onSwipeDown(event, candy: Candy) {
-    if (candy.x == this.numOfRows - 1) {
+    if (candy.x == this.numOfRows - 1 || this.turns == 0) {
+
       return
     }
     var currentCandy = this.board.grid[candy.x][candy.y]
@@ -226,9 +235,11 @@ export class GridComponent implements OnInit {
       candyBelowCurrent.type = currentType
 
     }else{
+      this.turns--;
+      console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 2000);
+      }, 1000);
     }
   }
 
@@ -316,24 +327,39 @@ export class GridComponent implements OnInit {
 
     //_____deleting candies____________________________________________________
     if ((up + down) >= 2) {
+
       for (var i = 0; i <= up; i++) {
+        if(this.board.grid[x][y + i].type != CandyType.nocolor){
+          this.score ++;
+        }
         this.board.grid[x][y + i].type = CandyType.nocolor;
       }
       for (var i = 0; i <= down; i++) {
+        if(this.board.grid[x][y - i].type != CandyType.nocolor){
+          this.score ++;
+        }
         this.board.grid[x][y - i].type = CandyType.nocolor;
       }
       success = true;
     }
     if ((left + right) >= 2) {
       for (var i = 0; i <= left; i++) {
+      if(this.board.grid[x - i][y].type != CandyType.nocolor){
+        this.score ++;
+      }
         this.board.grid[x - i][y].type = CandyType.nocolor;
       }
       for (var i = 0; i <= right; i++) {
+        if(this.board.grid[x + i][y].type != CandyType.nocolor){
+          this.score ++;
+        }
         this.board.grid[x + i][y].type = CandyType.nocolor;
         success = true;
       }
     }
     this.wait(10)
+
+    console.log(this.score)
 
 
     if (success == true) {
@@ -401,7 +427,7 @@ public shiftCandy() {
   }
   setTimeout(() => {
     this.checkGrid();
-  }, 1500);
+  }, 1000);
 }
 
 //returns an array of coordinates to delete
@@ -461,7 +487,7 @@ public checkGrid(){
     }
     if(hcount >= 3){
         for(let j = 0;j <hArr.length;j++){
-          console.log(1)
+          //console.log(1)
             removeCandyArr.push(hArr[j]);
         }
     }
@@ -473,7 +499,7 @@ public checkGrid(){
 for(let i = 0;i<this.numOfRows;i++){
     if(vdict[i][1] >= 3){
         for(let j = 0; j< vdict[i][2].length;j++){
-          console.log(2);
+          //console.log(2);
             removeCandyArr.push(vdict[i][2][j]);
         }
     }
@@ -500,10 +526,19 @@ if(removeCandyArr.length != 0){
   //take in 2d matrix and arr of coordinates to replace value with 'E'
   for(let i =0;i <newRemoveCandyArr.length;i++){
       this.board.grid[newRemoveCandyArr[i][0]][newRemoveCandyArr[i][1]].type = CandyType.nocolor;
+      this.score ++;
   }
+  console.log(this.score)
   setTimeout(() => {
     this.shiftCandy();
-  }, 1500);
+  }, 1000);
+}
+else if(this.turns == 0){
+  if(this.score >= this.scoreToBeat){
+    alert("YOU WIN!!!!!!")
+  }else{
+    alert("YOU LOSE")
+  }
 }
 }
 public wait(ms) {
