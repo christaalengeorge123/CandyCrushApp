@@ -55,13 +55,18 @@ import { timeout } from 'q';
         transform: 'translateY(0%)',
         'background-image': "url('candy2.png')"
       })),
+      transition('* => nocolor', [
+        animate('0.5s', keyframes([
+          style({opacity: 0}),
+        ]
+        ))
+      ]),
       transition('* => *', [
         animate('0.5s', keyframes([
-          style({ transform: 'translateY(25%)'}),
-          style({transform: 'translateY(50%)'}),
-          style({transform: 'translateY(75%)'}),
-          style({transform: 'translateY(100%)'})
-
+          style({transform: 'translateY(-75%)'}),
+          style({transform: 'translateY(-50%)'}),
+          style({transform: 'translateY(-25%)'}),
+          style({ transform: 'translateY(0%)'})
         ]
         
         ))
@@ -141,7 +146,7 @@ export class GridComponent implements OnInit {
       console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 1000);
+      }, 500);
     }
 
   }
@@ -172,7 +177,7 @@ export class GridComponent implements OnInit {
       console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 1000);
+      }, 600);
     }
   }
 
@@ -204,7 +209,7 @@ export class GridComponent implements OnInit {
       console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 1000);
+      }, 600);
     }
   }
   onSwipeDown(event, candy: Candy) {
@@ -239,7 +244,7 @@ export class GridComponent implements OnInit {
       console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 1000);
+      }, 600);
     }
   }
 
@@ -427,7 +432,7 @@ public shiftCandy() {
   }
   setTimeout(() => {
     this.checkGrid();
-  }, 1000);
+  }, 600);
 }
 
 //returns an array of coordinates to delete
@@ -531,7 +536,7 @@ if(removeCandyArr.length != 0){
   console.log(this.score)
   setTimeout(() => {
     this.shiftCandy();
-  }, 1000);
+  }, 600);
 }
 else if(this.turns == 0){
   if(this.score >= this.scoreToBeat){
