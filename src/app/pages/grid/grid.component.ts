@@ -117,6 +117,25 @@ export class GridComponent implements OnInit {
         this.board.grid[row][column] = candy
       }
     }
+
+    /*var test:CandyType[][] = [[CandyType.yellow, CandyType.Green, CandyType.yellow, CandyType.Green, CandyType.orange, CandyType.violet],
+                              [CandyType.violet, CandyType.violet, CandyType.Green, CandyType.Red, CandyType.yellow, CandyType.Red],
+                              [CandyType.Red, CandyType.violet, CandyType.Red, CandyType.orange, CandyType.Blue, CandyType.yellow],
+                              [CandyType.Red, CandyType.Blue, CandyType.Green, CandyType.yellow, CandyType.orange, CandyType.violet],
+                              [CandyType.violet, CandyType.orange, CandyType.yellow, CandyType.Blue, CandyType.Green, CandyType.Red],
+                              [CandyType.violet, CandyType.violet, CandyType.Green, CandyType.orange, CandyType.Blue, CandyType.yellow]
+    ]
+    
+
+    for (var row = 0; row < this.numOfRows; row++) {
+      this.board.grid[row] = []
+      for (var column = 0; column < this.numOfColumns; column++) {
+        var candy = new Candy(row, column, test[row][column])
+        //console.log(test[row][column])
+        this.board.grid[row][column] = candy
+      }
+    }*/
+
     this.checkGrid();
   }
 
@@ -544,8 +563,12 @@ else if(this.turns == 0){
   }else{
     alert("YOU LOSE")
   }
+}else{
+  this.checkValidGrid()
 }
 }
+
+
 public wait(ms) {
   var start = Date.now(),
       now = start;
@@ -554,6 +577,134 @@ public wait(ms) {
   }
 }
 
+public checkValidGrid(){
+
+  //check each candy
+  for(let i = 0; i < this.numOfRows; i++){
+    for(let j = 0; j < this.numOfColumns; j++){
+
+      //checks if there is a candy adjacent and if so, if there is any candy that can be moved on the other side
+      //to make a 3 in a row
+
+      //adjacent is right so checks candies left
+      if(j+1 < this.numOfColumns){
+        if(this.board.grid[i][j+1].type == this.board.grid[i][j].type){
+          if(j-2 >= 0){
+            if(this.board.grid[i][j-2].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i - 1 >= 0 && j-1 >= 0){
+            if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i+1 < this.numOfRows && j-1 >=0){
+            if(this.board.grid[i+1][j-1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+        }
+      }
+      //adjacent is left so checks candies right
+      if(j-1>=0){
+        if(this.board.grid[i][j-1].type == this.board.grid[i][j].type){
+          if(j+2 < this.numOfColumns){
+            if(this.board.grid[i][j+2].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i-1 >=0 && j+1 < this.numOfColumns){
+            if(this.board.grid[i-1][j+1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i+1 < this.numOfRows && j+1 < this.numOfColumns){
+            if(this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+        }
+      }
+      //adjacent is below so checks candies above
+      if(i+1 < this.numOfRows){
+        if(this.board.grid[i+1][j].type == this.board.grid[i][j].type){
+          if(i-2 >= 0){
+            if(this.board.grid[i-2][j].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i-1 >= 0 && j-1 >= 0){
+            if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i-1 >= 0 && j+1 < this.numOfColumns){
+            if(this.board.grid[i-1][j+1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+        }
+      }
+      //adjacent is above so checks candies below
+      if(i-1>=0){
+        if(this.board.grid[i-1][j].type == this.board.grid[i][j].type){
+          if(i+2 < this.numOfRows){
+            if(this.board.grid[i+2][j].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i+1 < this.numOfRows && j-1 >= 0){
+            if(this.board.grid[i+1][j-1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+          if(i+1 < this.numOfRows && j+1 < this.numOfColumns){
+            if(this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+              return
+            }
+          }
+        }
+      }
+
+      //checks to see if candy can be moved between two candies to make a 3 in a row
+
+      //above
+      if(i-1 >= 0){
+        if(j-1 >= 0 && j+1 < this.numOfColumns){
+          if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type && this.board.grid[i-1][j+1].type == this.board.grid[i][j].type){
+            return
+          }
+        }
+      }
+      //below
+      if(i+1 < this.numOfRows){
+        if(j-1 >= 0 && j+1 < this.numOfColumns){
+          if(this.board.grid[i+1][j-1].type == this.board.grid[i][j].type && this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+            return
+          }
+        }
+      }
+      //left
+      if(j-1 >= 0){
+        if(i-1 >= 0 && i+1 < this.numOfRows){
+          if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type && this.board.grid[i+1][j-1].type == this.board.grid[i][j].type){
+            return
+          }
+        }
+      }
+      //right
+      if(j+1 < this.numOfColumns){
+        if(i-1 >= 0 && i+1 < this.numOfRows){
+          if(this.board.grid[i-1][j+1].type == this.board.grid[i][j].type && this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+            return
+          }
+        }
+      }
+    }
+  }
+  alert("no more moves available")
+}
 }
 
 
