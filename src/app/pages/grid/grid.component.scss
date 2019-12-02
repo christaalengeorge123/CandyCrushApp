@@ -133,5 +133,31 @@
     cursor: pointer;
    // transform: scale(1.5); 
     }
+.stats{
+    float: right;
     
+    padding: 15px;
+    display: block;
+    font-size: 15px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    color:#a42af5;
+    
+}
+.game-stats{
+    //float: right;
+
+    position: absolute;
+    right: 0;
+}
+.level{
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    color:#a42af5; 
+}
+a:hover {
+    color: hotpink;
+  }
       

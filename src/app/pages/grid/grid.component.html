@@ -4,32 +4,42 @@
       <div class="navbar-item">
         <h1 class="app-name has-gradient-text">Candy Crush</h1>
       </div>
+      <div class="game-stats">
+        <div class="stats 1">
+          <p>Target Score: {{this.scoreToBeat}}</p>
+        </div>
+        <div class="stats 2">
+          <p>Current Score: {{this.score}}</p>
+        </div>
+        <div class="stats 3">
+          <p>Turns Left: {{this.turns}}</p>
+        </div>
+        <!--  <p class="board-name"><a href routerLink="register">Register</a></p>-->
+      </div>
+      <div class="level"> <a href routerLink="map">Levels</a></div>
     </div>
   </div>
 
   <div class="board">
     <div class="board-bar">
-     <!--  <p class="board-name"><a href routerLink="register">Register</a></p>-->
-    </div>
-    <div class="board-wrapper">
+
+      <div class="board-wrapper">
+
+      </div>
       <div class="grid_box board-rows">
         <div>
           <div class="grid_row" *ngFor="let candyRow of board.grid">
 
             <div class="grid_cell" *ngFor="let candy of candyRow">
 
-              <div class="tiles {{candy.type}}Tiles"  
-              (swipeleft)="onSwipeLeft($event, candy)" 
-              (swiperight)="onSwipeRight($event, candy)" 
-              (swipeup)="onSwipeUp($event, candy)" 
-              (swipedown)="onSwipeDown($event, candy)"
-              [@animateCandy]= "candy.type"
-              
-              ></div>
+              <div class="tiles {{candy.type}}Tiles" (swipeleft)="onSwipeLeft($event, candy)"
+                (swiperight)="onSwipeRight($event, candy)" (swipeup)="onSwipeUp($event, candy)"
+                (swipedown)="onSwipeDown($event, candy)" [@animateCandy]="candy.type"></div>
 
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </div>

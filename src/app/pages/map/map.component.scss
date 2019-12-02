@@ -1,0 +1,140 @@
+.root {
+    height: 100%;
+}
+
+.app-name {
+    font-size: 28px;
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+}
+
+.has-gradient-text {
+    background: -webkit-linear-gradient(#f71372, #a42af5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.board{
+    // Override Automatic Minimum Size
+    // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
+    min-width: 0;
+    min-height: 0;
+    .board-bar{
+        background: rgba(gray,0.5);
+        padding: 8px 15px;
+        height: 10px;
+    
+        .board-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(255,255,255);
+        }
+    }
+}
+
+.board-wrapper {
+    display: flex;
+    flex-direction: row;       
+}
+
+.grid_box{ 
+    
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 450px;
+    height: 300px;
+    width: 385px;
+    height: 440px;
+    background: rgba(white,0.5);
+}
+.level1{
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+   
+}
+.level2{
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+   
+}
+.level3{
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+}
+.level4{
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+}
+.level5{
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+}
+.level1:after {
+    content: "";
+    background-color: #000;
+    position: absolute;
+    width: 3px;
+    height: 100px;
+    top: 40px;
+    left: 47%;
+    display: block;
+  }
+  .level2:after {
+    content: "";
+    background-color: #000;
+    position: absolute;
+    width: 3px;
+    height: 100px;
+   // top: 40px;
+    left: 47%;
+    display: block;
+  }
+  .level3:after {
+    content: "";
+    background-color: #000;
+    position: absolute;
+    width: 3px;
+    height: 100px;
+   // top: 40px;
+    left: 47%;
+    display: block;
+  }
+  .level4:after {
+    content: "";
+    background-color: #000;
+    position: absolute;
+    width: 3px;
+    height: 100px;
+   // top: 40px;
+    left: 47%;
+    display: block;
+  }

@@ -11,6 +11,8 @@ import { GridComponent } from './pages/grid/grid.component';
 import * as Hammer from 'hammerjs';
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MapComponent } from './pages/map/map.component';
+
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -23,7 +25,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     AppComponent,
     MainViewComponent,
     RegisterComponent,
-    GridComponent
+    GridComponent,
+    MapComponent,
+    
   ],
   imports: [
     BrowserModule,

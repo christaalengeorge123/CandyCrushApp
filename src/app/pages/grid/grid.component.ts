@@ -53,24 +53,29 @@ import {
         transform: 'translateY(0%)',
         'background-image': "url('assets/candy2.png')"
       })),
+      transition('* => nocolor', [
+        animate('0.5s', keyframes([
+          style({opacity: 0}),
+        ]
+        ))
+      ]),
       transition('* => *', [
         animate('0.5s', keyframes([
-          style({ transform: 'translateY(25%)'}),
-          style({transform: 'translateY(50%)'}),
-         
-          style({transform: 'translateY(75%)'}),
-          style(({opacity: 0})),
-          style({transform: 'translateY(100%)'}),
-          style(({opacity: 0})),
-
+          style({transform: 'translateY(-75%)'}),
+          style({transform: 'translateY(-50%)'}),
+          style({transform: 'translateY(-25%)'}),
+          style({ transform: 'translateY(0%)'})
         ]
+        
         ))
       ])
     ])
   ]
 })
 export class GridComponent implements OnInit {
-
+  score:number=0;
+  turns:number=10;
+  scoreToBeat:number=50;
   board: Board = new Board([])
   numOfRows: number = 6
   numOfColumns: number = 6
@@ -112,7 +117,7 @@ export class GridComponent implements OnInit {
   }
 
   onSwipeLeft(event, candy: Candy) {
-    if (candy.y == 0) {
+    if (candy.y == 0||this.turns==0) {
       return
     }
 
@@ -133,13 +138,17 @@ export class GridComponent implements OnInit {
       candy.y += 1
       rightSideCandy.y -= 1
     }else{
-      this.shiftCandy();
+      this.turns--
+      console.log(this.turns)
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 500);
     }
 
   }
   onSwipeRight(event, candy: Candy) {
     var row = this.board.grid[candy.x]
-    if (candy.y == row.length - 1) {
+    if (candy.y == row.length - 1||this.turns==0) {
       return
 
 
@@ -160,12 +169,15 @@ export class GridComponent implements OnInit {
       candy.y -= 1
       leftSideCandy.y += 1
     }else{
-      this.shiftCandy();
+      this.turns--
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 500);
     }
   }
 
   onSwipeUp(event, candy: Candy) {
-    if (candy.x == 0) {
+    if (candy.x == 0||this.turns==0) {
       return
     }
     var currentCandy = this.board.grid[candy.x][candy.y]
@@ -188,11 +200,14 @@ export class GridComponent implements OnInit {
       candyBelowCurrent.type = currentType
 
     }else{
-      this.shiftCandy();
+      this.turns--
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 500);
     }
   }
   onSwipeDown(event, candy: Candy) {
-    if (candy.x == this.numOfRows - 1) {
+    if (candy.x == this.numOfRows - 1||this.turns==0) {
       return
     }
     var currentCandy = this.board.grid[candy.x][candy.y]
@@ -218,7 +233,10 @@ export class GridComponent implements OnInit {
       candyBelowCurrent.type = currentType
 
     }else{
-      this.shiftCandy();
+      this.turns--
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 500);
     }
   }
 
@@ -308,23 +326,36 @@ export class GridComponent implements OnInit {
     if ((up + down) >= 2) {
       for (var i = 0; i <= up; i++) {
         this.board.grid[x][y + i].type = CandyType.nocolor;
+        if(this.board.grid[x][y+i].type!=CandyType.nocolor){
+          this.score++;
+        }
       }
       for (var i = 0; i <= down; i++) {
+        if(this.board.grid[x][y-i].type!=CandyType.nocolor){
+          this.score++;
+        }
         this.board.grid[x][y - i].type = CandyType.nocolor;
+
       }
       success = true;
     }
     if ((left + right) >= 2) {
       for (var i = 0; i <= left; i++) {
+        if(this.board.grid[x-i][y].type!=CandyType.nocolor){
+          this.score++;
+        }
         this.board.grid[x - i][y].type = CandyType.nocolor;
       }
       for (var i = 0; i <= right; i++) {
+        if(this.board.grid[x+i][y].type!=CandyType.nocolor){
+          this.score++;
+        }
         this.board.grid[x + i][y].type = CandyType.nocolor;
         success = true;
       }
     }
-
-
+    this.wait(10)
+    console.log(this.score)
     if (success == true) {
       return 1;
     }
@@ -368,7 +399,9 @@ public shiftCandy() {
 
     }
   }
-  this.checkGrid();
+  setTimeout(() => {
+    this.checkGrid();
+  }, 1500);
 }
 
 //returns an array of coordinates to delete
@@ -467,11 +500,27 @@ if(removeCandyArr.length != 0){
   //take in 2d matrix and arr of coordinates to replace value with 'E'
   for(let i =0;i <newRemoveCandyArr.length;i++){
       this.board.grid[newRemoveCandyArr[i][0]][newRemoveCandyArr[i][1]].type = CandyType.nocolor;
+      this.score++;
+    }
+    console.log(this.score)
+  setTimeout(() => {
+    this.shiftCandy();
+  }, 1500);
+}else if(this.turns==0){
+  if(this.score>=this.scoreToBeat){
+    alert("you win")
+  }else{
+    alert("you loose")
   }
- this.shiftCandy();
 }
 }
-
+public wait(ms) {
+  var start = Date.now(),
+      now = start;
+  while (now - start < ms) {
+    now = Date.now();
+  }
+}
 }
 
 
