@@ -109,16 +109,16 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (var row = 0; row < this.numOfRows; row++) {
+    /*for (var row = 0; row < this.numOfRows; row++) {
       this.board.grid[row] = []
       for (var column = 0; column < this.numOfColumns; column++) {
         var candy = new Candy(row, column, this.getRandomCandy())
         //console.log(candy.type)
         this.board.grid[row][column] = candy
       }
-    }
+    }*/
 
-    /*var test:CandyType[][] = [[CandyType.yellow, CandyType.Green, CandyType.yellow, CandyType.Green, CandyType.orange, CandyType.violet],
+    var test:CandyType[][] = [[CandyType.yellow, CandyType.Green, CandyType.yellow, CandyType.Green, CandyType.orange, CandyType.violet],
                               [CandyType.violet, CandyType.violet, CandyType.Green, CandyType.Red, CandyType.yellow, CandyType.Red],
                               [CandyType.Red, CandyType.violet, CandyType.Red, CandyType.orange, CandyType.Blue, CandyType.yellow],
                               [CandyType.Red, CandyType.Blue, CandyType.Green, CandyType.yellow, CandyType.orange, CandyType.violet],
@@ -134,7 +134,7 @@ export class GridComponent implements OnInit {
         //console.log(test[row][column])
         this.board.grid[row][column] = candy
       }
-    }*/
+    }
 
     this.checkGrid();
   }
@@ -704,7 +704,43 @@ public checkValidGrid(){
     }
   }
   alert("no more moves available")
+  this.colorScramble();
 }
+
+public colorScramble(){
+  var colorDict = {}
+
+  //records the number of each color
+  for(var i = 0; i < this.numOfRows; i++){
+    for(var j = 0; j < this.numOfColumns; j++){
+      if(isNaN(colorDict[this.board.grid[i][j].type])){
+        colorDict[this.board.grid[i][j].type] = 1;
+      }else{
+        colorDict[this.board.grid[i][j].type] +=1;
+      }
+    }
+  }
+
+  //replaces candies with other candies
+  for(var i = 0; i < this.numOfRows; i++){
+    for(var j = 0; j < this.numOfColumns; j++){
+      var done = false;
+      while(done == false){
+        var color:CandyType = this.getRandomCandy();
+        //console.log(color)
+        //done = true;
+        if(colorDict[color] > 0){
+          this.board.grid[i][j].type = color;
+          colorDict[color] -=1;
+          done = true;
+        }
+      }
+    }
+  }
+  this.checkGrid()
+
+}
+
 }
 
 
