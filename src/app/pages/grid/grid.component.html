@@ -32,7 +32,7 @@
 
             <div class="grid_cell" *ngFor="let candy of candyRow">
 
-              <div class="tiles {{candy.type}}Tiles" (swipeleft)="onSwipeLeft($event, candy)"
+              <div class="tiles {{candy.type}}Tiles" id = "{{candy.x}}{{candy.y}}"(swipeleft)="onSwipeLeft($event, candy)"
                 (swiperight)="onSwipeRight($event, candy)" (swipeup)="onSwipeUp($event, candy)"
                 (swipedown)="onSwipeDown($event, candy)" [@animateCandy]="candy.type"></div>
 
