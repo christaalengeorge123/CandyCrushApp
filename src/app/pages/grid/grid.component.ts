@@ -60,7 +60,7 @@ import { timeout } from 'q';
           style({opacity: 0}),
         ]
         ))
-      ]),
+      ])/*,
       transition('* => *', [
         animate('0.5s', keyframes([
           style({transform: 'translateY(-75%)'}),
@@ -70,11 +70,13 @@ import { timeout } from 'q';
         ]
         
         ))
-      ])
+      ])*/
       
     ])
   ]
 })
+
+
 export class GridComponent implements OnInit {
 
   board: Board = new Board([])
@@ -109,16 +111,16 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*for (var row = 0; row < this.numOfRows; row++) {
+    for (var row = 0; row < this.numOfRows; row++) {
       this.board.grid[row] = []
       for (var column = 0; column < this.numOfColumns; column++) {
         var candy = new Candy(row, column, this.getRandomCandy())
         //console.log(candy.type)
         this.board.grid[row][column] = candy
       }
-    }*/
+    }
 
-    var test:CandyType[][] = [[CandyType.yellow, CandyType.Green, CandyType.yellow, CandyType.Green, CandyType.orange, CandyType.violet],
+    /*var test:CandyType[][] = [[CandyType.yellow, CandyType.Green, CandyType.yellow, CandyType.Green, CandyType.orange, CandyType.violet],
                               [CandyType.violet, CandyType.violet, CandyType.Green, CandyType.Red, CandyType.yellow, CandyType.Red],
                               [CandyType.Red, CandyType.violet, CandyType.Red, CandyType.orange, CandyType.Blue, CandyType.yellow],
                               [CandyType.Red, CandyType.Blue, CandyType.Green, CandyType.yellow, CandyType.orange, CandyType.violet],
@@ -134,7 +136,7 @@ export class GridComponent implements OnInit {
         //console.log(test[row][column])
         this.board.grid[row][column] = candy
       }
-    }
+    }*/
 
     this.checkGrid();
   }
@@ -162,10 +164,10 @@ export class GridComponent implements OnInit {
       rightSideCandy.y -= 1
     }else{
       this.turns--;
-      console.log(this.turns);
+      //console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
-      }, 500);
+      }, 600);
     }
 
   }
@@ -193,7 +195,7 @@ export class GridComponent implements OnInit {
       leftSideCandy.y += 1
     }else{
       this.turns--;
-      console.log(this.turns);
+      //console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
       }, 600);
@@ -225,7 +227,7 @@ export class GridComponent implements OnInit {
 
     }else{
       this.turns--;
-      console.log(this.turns);
+      //console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
       }, 600);
@@ -248,7 +250,7 @@ export class GridComponent implements OnInit {
     var success = this.localCheck(0, candy.x, candy.y, 0, candy.type);
     var success2 = this.localCheck(0, candy.x + 1, candy.y, 0, this.board.grid[candy.x + 1][candy.y].type);
     if (success == 0 && success2 == 0) {
-      console.log(success);
+      //console.log(success);
       var currentCandy = this.board.grid[candy.x][candy.y]
       var candyBelowCurrent = this.board.grid[candy.x + 1][candy.y]
 
@@ -260,7 +262,7 @@ export class GridComponent implements OnInit {
 
     }else{
       this.turns--;
-      console.log(this.turns);
+      //console.log(this.turns);
       setTimeout(() => {
         this.shiftCandy();
       }, 600);
@@ -383,7 +385,7 @@ export class GridComponent implements OnInit {
     }
     this.wait(10)
 
-    console.log(this.score)
+    //console.log(this.score)
 
 
     if (success == true) {
@@ -405,9 +407,11 @@ public shiftCandy() {
         if (this.board.grid[temp-1][k].type != CandyType.nocolor) {
           //couldnt swap for some reason so just decided to swap colors
 
-            this.wait(5)
+            //this.wait(5)
             this.board.grid[mark][k].type = this.board.grid[temp-1][k].type;
             this.board.grid[temp-1][k].type = CandyType.nocolor;
+            this.slideDown(mark, k)
+            
           
           
 
@@ -440,6 +444,7 @@ public shiftCandy() {
           for (let j = 0; j < this.numOfRows; j++) {
             if (this.board.grid[0][j].type == CandyType.nocolor) {
               this.board.grid[0][j].type = this.getRandomCandy()
+              this.slideDown(0, j)
               
             }
           }
@@ -531,7 +536,7 @@ for(let i = 0;i<this.numOfRows;i++){
 //final checker to see if last element makes a 3 or more in a horizontal row
 if (hcount >=3 ){
     for(let j = 0; j<hArr.length;j++){
-      console.log(3);
+      //console.log(3);
         removeCandyArr.push(hArr[j]);
     }
 }
@@ -552,7 +557,7 @@ if(removeCandyArr.length != 0){
       this.board.grid[newRemoveCandyArr[i][0]][newRemoveCandyArr[i][1]].type = CandyType.nocolor;
       this.score ++;
   }
-  console.log(this.score)
+  //console.log(this.score)
   setTimeout(() => {
     this.shiftCandy();
   }, 600);
@@ -727,8 +732,6 @@ public colorScramble(){
       var done = false;
       while(done == false){
         var color:CandyType = this.getRandomCandy();
-        //console.log(color)
-        //done = true;
         if(colorDict[color] > 0){
           this.board.grid[i][j].type = color;
           colorDict[color] -=1;
@@ -739,6 +742,16 @@ public colorScramble(){
   }
   this.checkGrid()
 
+}
+public slideDown(x:number, y:number){
+  var temp:string =  x.toString() + y.toString()
+  console.log(temp)
+  document.getElementById(temp).animate([
+    {transform: 'translateY(-75%)'},
+    { transform: 'translateY(0%)'}
+  ],{
+  duration: 600
+  });
 }
 
 }
