@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid';
 import { CandyType } from 'src/app/models/enum/candytype.enum';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import {
   trigger,
@@ -524,10 +524,8 @@ export class GridComponent implements OnInit {
     }
   }
   showDialog() {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: '450px',
-      height: '200px'
-    });
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
   }
 }

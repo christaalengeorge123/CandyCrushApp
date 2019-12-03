@@ -8,13 +8,11 @@ import { MatDialogRef } from '@angular/material';
 })
 export class DialogComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<DialogComponent>,
-    ) { }
+  constructor(public dialogRef: MatDialogRef<DialogComponent>) { }
 
   ngOnInit() {
     {
-      this.dialogRef.updatePosition({ top: `30px`,
-      right: `40px`});
+    //  this.dialogRef.updatePosition();
     }
   }
 

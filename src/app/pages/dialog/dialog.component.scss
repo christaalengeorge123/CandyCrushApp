@@ -1,6 +1,10 @@
 .mat-dialog-actions{
     justify-content: flex-end;
  }
- .root{
+ .dialogBoxRoot{
      background-color: aqua;
  }
+
+ .mat-dialog-content {
+    max-height: initial !important;
+}
