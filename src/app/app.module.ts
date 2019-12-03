@@ -13,6 +13,9 @@ import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-br
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapComponent } from './pages/map/map.component';
 
+import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { DialogComponent } from './pages/dialog/dialog.component';
+
 
 export class MyHammerConfig extends HammerGestureConfig {
   overrides = <any> {
@@ -27,13 +30,19 @@ export class MyHammerConfig extends HammerGestureConfig {
     RegisterComponent,
     GridComponent,
     MapComponent,
+    DialogComponent,
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     DragDropModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    DialogComponent
   ],
   providers: [
     {provide: HAMMER_GESTURE_CONFIG,

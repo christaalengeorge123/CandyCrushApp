@@ -7,6 +7,8 @@ import { v4 as uuid } from 'uuid';
 import { CandyType } from 'src/app/models/enum/candytype.enum';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Title } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 import {
   trigger,
   state,
@@ -41,7 +43,7 @@ import {
         opacity: 1,
         transform: 'translateY(0%)',
         'background-image': "url('assets/browncandy.png')",
-        
+
       })),
       state('violet', style({
         opacity: 1,
@@ -55,33 +57,33 @@ import {
       })),
       transition('* => nocolor', [
         animate('0.5s', keyframes([
-          style({opacity: 0}),
+          style({ opacity: 0 }),
         ]
         ))
       ]),
       transition('* => *', [
         animate('0.5s', keyframes([
-          style({transform: 'translateY(-75%)'}),
-          style({transform: 'translateY(-50%)'}),
-          style({transform: 'translateY(-25%)'}),
-          style({ transform: 'translateY(0%)'})
+          style({ transform: 'translateY(-75%)' }),
+          style({ transform: 'translateY(-50%)' }),
+          style({ transform: 'translateY(-25%)' }),
+          style({ transform: 'translateY(0%)' })
         ]
-        
+
         ))
       ])
     ])
   ]
 })
 export class GridComponent implements OnInit {
-  score:number=0;
-  turns:number=10;
-  scoreToBeat:number=50;
+  score: number = 0;
+  turns: number = 10;
+  scoreToBeat: number = 50;
   board: Board = new Board([])
   numOfRows: number = 6
   numOfColumns: number = 6
 
   constructor(
-    private titleService: Title
+    private titleService: Title, public dialog: MatDialog
 
   ) {
     this.titleService.setTitle('CandyCrush');
@@ -95,11 +97,11 @@ export class GridComponent implements OnInit {
       return CandyType.Green
     } else if (value == 2) {
       return CandyType.Red
-    }else if(value ==3){
+    } else if (value == 3) {
       return CandyType.yellow
-    }else if(value ==4){
+    } else if (value == 4) {
       return CandyType.violet
-    }else if(value ==5){
+    } else if (value == 5) {
       return CandyType.orange
     }
   }
@@ -117,7 +119,7 @@ export class GridComponent implements OnInit {
   }
 
   onSwipeLeft(event, candy: Candy) {
-    if (candy.y == 0||this.turns==0) {
+    if (candy.y == 0 || this.turns == 0) {
       return
     }
 
@@ -137,7 +139,7 @@ export class GridComponent implements OnInit {
 
       candy.y += 1
       rightSideCandy.y -= 1
-    }else{
+    } else {
       this.turns--
       console.log(this.turns)
       setTimeout(() => {
@@ -148,7 +150,7 @@ export class GridComponent implements OnInit {
   }
   onSwipeRight(event, candy: Candy) {
     var row = this.board.grid[candy.x]
-    if (candy.y == row.length - 1||this.turns==0) {
+    if (candy.y == row.length - 1 || this.turns == 0) {
       return
 
 
@@ -168,7 +170,7 @@ export class GridComponent implements OnInit {
 
       candy.y -= 1
       leftSideCandy.y += 1
-    }else{
+    } else {
       this.turns--
       setTimeout(() => {
         this.shiftCandy();
@@ -177,7 +179,7 @@ export class GridComponent implements OnInit {
   }
 
   onSwipeUp(event, candy: Candy) {
-    if (candy.x == 0||this.turns==0) {
+    if (candy.x == 0 || this.turns == 0) {
       return
     }
     var currentCandy = this.board.grid[candy.x][candy.y]
@@ -199,7 +201,7 @@ export class GridComponent implements OnInit {
       currentCandy.type = candyBelowCurrent.type
       candyBelowCurrent.type = currentType
 
-    }else{
+    } else {
       this.turns--
       setTimeout(() => {
         this.shiftCandy();
@@ -207,7 +209,7 @@ export class GridComponent implements OnInit {
     }
   }
   onSwipeDown(event, candy: Candy) {
-    if (candy.x == this.numOfRows - 1||this.turns==0) {
+    if (candy.x == this.numOfRows - 1 || this.turns == 0) {
       return
     }
     var currentCandy = this.board.grid[candy.x][candy.y]
@@ -232,7 +234,7 @@ export class GridComponent implements OnInit {
       currentCandy.type = candyBelowCurrent.type
       candyBelowCurrent.type = currentType
 
-    }else{
+    } else {
       this.turns--
       setTimeout(() => {
         this.shiftCandy();
@@ -326,12 +328,12 @@ export class GridComponent implements OnInit {
     if ((up + down) >= 2) {
       for (var i = 0; i <= up; i++) {
         this.board.grid[x][y + i].type = CandyType.nocolor;
-        if(this.board.grid[x][y+i].type!=CandyType.nocolor){
+        if (this.board.grid[x][y + i].type != CandyType.nocolor) {
           this.score++;
         }
       }
       for (var i = 0; i <= down; i++) {
-        if(this.board.grid[x][y-i].type!=CandyType.nocolor){
+        if (this.board.grid[x][y - i].type != CandyType.nocolor) {
           this.score++;
         }
         this.board.grid[x][y - i].type = CandyType.nocolor;
@@ -341,13 +343,13 @@ export class GridComponent implements OnInit {
     }
     if ((left + right) >= 2) {
       for (var i = 0; i <= left; i++) {
-        if(this.board.grid[x-i][y].type!=CandyType.nocolor){
+        if (this.board.grid[x - i][y].type != CandyType.nocolor) {
           this.score++;
         }
         this.board.grid[x - i][y].type = CandyType.nocolor;
       }
       for (var i = 0; i <= right; i++) {
-        if(this.board.grid[x+i][y].type!=CandyType.nocolor){
+        if (this.board.grid[x + i][y].type != CandyType.nocolor) {
           this.score++;
         }
         this.board.grid[x + i][y].type = CandyType.nocolor;
@@ -362,165 +364,172 @@ export class GridComponent implements OnInit {
     return 0;
 
   }
-public shiftCandy() {
-  let temporary = 0;
-  //loop through 2d matrix from bottom right to top left
-  for (let i = this.numOfRows - 1; i >= 0; i--) {
-    for (let k = this.numOfColumns - 1; k >= 0; k--) {
-      //iterate through 2dmatrix, if you find an 'E' colored candy:
-      let temp = i;
-      let mark = i;
-      while ((this.board.grid[temp][k].type == CandyType.nocolor) && (temp - 1 >= 0)) {
-        //if u find a colored candy above E, swap them
-        if (this.board.grid[temp-1][k].type != CandyType.nocolor) {
-          //couldnt swap for some reason so just decided to swap colors
-          this.board.grid[mark][k].type = this.board.grid[temp-1][k].type;
-          this.board.grid[temp-1][k].type = CandyType.nocolor;
-          break;
-        }
-        //if u find another E on top, keep going up
-        else {
-          temp--;
-        }
-      }
-      //if you made it all the way up to the top, make the whole row random candies
-      if (temp <= 0) {
-        for (let j = mark; j >= 0; j--) {
-          //this.board.grid[j][k].type = this.getRandomCandy()
-        }
-      }
-      else {
-        for (let j = 0; j < this.numOfRows; j++) {
-          if (this.board.grid[0][j].type == CandyType.nocolor) {
-            this.board.grid[0][j].type = this.getRandomCandy()
+  public shiftCandy() {
+    let temporary = 0;
+    //loop through 2d matrix from bottom right to top left
+    for (let i = this.numOfRows - 1; i >= 0; i--) {
+      for (let k = this.numOfColumns - 1; k >= 0; k--) {
+        //iterate through 2dmatrix, if you find an 'E' colored candy:
+        let temp = i;
+        let mark = i;
+        while ((this.board.grid[temp][k].type == CandyType.nocolor) && (temp - 1 >= 0)) {
+          //if u find a colored candy above E, swap them
+          if (this.board.grid[temp - 1][k].type != CandyType.nocolor) {
+            //couldnt swap for some reason so just decided to swap colors
+            this.board.grid[mark][k].type = this.board.grid[temp - 1][k].type;
+            this.board.grid[temp - 1][k].type = CandyType.nocolor;
+            break;
+          }
+          //if u find another E on top, keep going up
+          else {
+            temp--;
           }
         }
+        //if you made it all the way up to the top, make the whole row random candies
+        if (temp <= 0) {
+          for (let j = mark; j >= 0; j--) {
+            //this.board.grid[j][k].type = this.getRandomCandy()
+          }
+        }
+        else {
+          for (let j = 0; j < this.numOfRows; j++) {
+            if (this.board.grid[0][j].type == CandyType.nocolor) {
+              this.board.grid[0][j].type = this.getRandomCandy()
+            }
+          }
+        }
+
       }
-
     }
+    setTimeout(() => {
+      this.checkGrid();
+    }, 1500);
   }
-  setTimeout(() => {
-    this.checkGrid();
-  }, 1500);
-}
 
-//returns an array of coordinates to delete
-public checkGrid(){   
-  let removeCandyArr = [];
-  var vdict = {}; var hcount = 0; var hArr = []; let colorMarker = CandyType.nocolor;
- //iterate through 2d matrix
-  for(let i = 0;i<this.numOfRows;i++){
-      for(let k = 0;k<this.numOfColumns;k++){
-          //console.log(hArr); 
+  //returns an array of coordinates to delete
+  public checkGrid() {
+    let removeCandyArr = [];
+    var vdict = {}; var hcount = 0; var hArr = []; let colorMarker = CandyType.nocolor;
+    //iterate through 2d matrix
+    for (let i = 0; i < this.numOfRows; i++) {
+      for (let k = 0; k < this.numOfColumns; k++) {
+        //console.log(hArr); 
 
-          //if dict doesnt exist, put in first entry
-          // dict = { 
-          //    '0' : ['G', 2, [[0,0], [1,0]]
-          // }
-          //checking for horizontal 3 in a row
-          if(this.board.grid[i][k].type != colorMarker){
-              if(hcount >= 3){
-                  for(let j = 0;j<hArr.length;j++){
-                    
-                      removeCandyArr.push(hArr[j]);
-                  }
-              }
-              hArr = [];
-              hArr.push([i,k]);
-              hcount = 1;
-              colorMarker = this.board.grid[i][k].type ;
-          } else{
-            hArr.push([i,k]);
-            hcount+=1;
+        //if dict doesnt exist, put in first entry
+        // dict = { 
+        //    '0' : ['G', 2, [[0,0], [1,0]]
+        // }
+        //checking for horizontal 3 in a row
+        if (this.board.grid[i][k].type != colorMarker) {
+          if (hcount >= 3) {
+            for (let j = 0; j < hArr.length; j++) {
+
+              removeCandyArr.push(hArr[j]);
+            }
+          }
+          hArr = [];
+          hArr.push([i, k]);
+          hcount = 1;
+          colorMarker = this.board.grid[i][k].type;
+        } else {
+          hArr.push([i, k]);
+          hcount += 1;
         }
         //check for vertical 3 or more using hashmap w/ array
         //uses k index as key and 1st index of value is letter, 2nd is count, 3rd is array of coordinates
-        if(typeof vdict[k] == "undefined"){
-            vdict[k] = [];
+        if (typeof vdict[k] == "undefined") {
+          vdict[k] = [];
+          vdict[k][0] = this.board.grid[i][k].type;
+          vdict[k][1] = 1;
+          vdict[k][2] = [[i, k]];
+        }
+        else {
+          if (vdict[k][0] == this.board.grid[i][k].type) {
+            vdict[k][1] += 1;
+            vdict[k][2].push([i, k]);
+          }
+          else {
+            if (vdict[k][1] >= 3) {
+              for (let j = 0; j < vdict[k][2].length; j++) {
+
+                removeCandyArr.push(vdict[k][2][j]);
+              }
+            }
             vdict[k][0] = this.board.grid[i][k].type;
             vdict[k][1] = 1;
-            vdict[k][2] = [[i,k]];
+            vdict[k][2] = [[i, k]];
+          }
         }
-        else{
-            if(vdict[k][0] == this.board.grid[i][k].type){
-                vdict[k][1] +=1;
-                vdict[k][2].push([i,k]);
-            }
-            else{
-                if(vdict[k][1] >= 3){
-                    for(let j = 0; j< vdict[k][2].length;j++){
-                      
-                        removeCandyArr.push(vdict[k][2][j]);
-                    }
-                }
-                vdict[k][0] = this.board.grid[i][k].type;
-                vdict[k][1] = 1;
-                vdict[k][2] = [[i,k]];
-            }
-        }
-    }
-    if(hcount >= 3){
-        for(let j = 0;j <hArr.length;j++){
+      }
+      if (hcount >= 3) {
+        for (let j = 0; j < hArr.length; j++) {
           console.log(1)
-            removeCandyArr.push(hArr[j]);
+          removeCandyArr.push(hArr[j]);
         }
+      }
+      colorMarker = CandyType.nocolor;
+      hArr = [];
+      hcount = 0;
     }
-    colorMarker = CandyType.nocolor;
-    hArr = [];
-    hcount = 0;
-}
-//another checker after finish iterating through 2d matrix. final checker to see if last element creates 3 or more in a vertical row
-for(let i = 0;i<this.numOfRows;i++){
-    if(vdict[i][1] >= 3){
-        for(let j = 0; j< vdict[i][2].length;j++){
+    //another checker after finish iterating through 2d matrix. final checker to see if last element creates 3 or more in a vertical row
+    for (let i = 0; i < this.numOfRows; i++) {
+      if (vdict[i][1] >= 3) {
+        for (let j = 0; j < vdict[i][2].length; j++) {
           console.log(2);
-            removeCandyArr.push(vdict[i][2][j]);
+          removeCandyArr.push(vdict[i][2][j]);
         }
+      }
     }
-}
-//final checker to see if last element makes a 3 or more in a horizontal row
-if (hcount >=3 ){
-    for(let j = 0; j<hArr.length;j++){
-      console.log(3);
+    //final checker to see if last element makes a 3 or more in a horizontal row
+    if (hcount >= 3) {
+      for (let j = 0; j < hArr.length; j++) {
+        console.log(3);
         removeCandyArr.push(hArr[j]);
+      }
     }
-}
-this.removeCandy(removeCandyArr)
-return removeCandyArr;
-}
-
-//returns an array with 'E' marked candies to delete 
-public removeCandy( removeCandyArr){
-  // let set = new Set(removeCandyArr.map(JSON.stringify));
-  // let newRemoveCandyArr = Array.from(set).map(JSON.parse);
-  let newRemoveCandyArr = removeCandyArr;
-if(removeCandyArr.length != 0){
-
-
-  //take in 2d matrix and arr of coordinates to replace value with 'E'
-  for(let i =0;i <newRemoveCandyArr.length;i++){
-      this.board.grid[newRemoveCandyArr[i][0]][newRemoveCandyArr[i][1]].type = CandyType.nocolor;
-      this.score++;
-    }
-    console.log(this.score)
-  setTimeout(() => {
-    this.shiftCandy();
-  }, 1500);
-}else if(this.turns==0){
-  if(this.score>=this.scoreToBeat){
-    alert("you win")
-  }else{
-    alert("you loose")
+    this.removeCandy(removeCandyArr)
+    return removeCandyArr;
   }
-}
-}
-public wait(ms) {
-  var start = Date.now(),
+
+  //returns an array with 'E' marked candies to delete 
+  public removeCandy(removeCandyArr) {
+    // let set = new Set(removeCandyArr.map(JSON.stringify));
+    // let newRemoveCandyArr = Array.from(set).map(JSON.parse);
+    let newRemoveCandyArr = removeCandyArr;
+    if (removeCandyArr.length != 0) {
+
+
+      //take in 2d matrix and arr of coordinates to replace value with 'E'
+      for (let i = 0; i < newRemoveCandyArr.length; i++) {
+        this.board.grid[newRemoveCandyArr[i][0]][newRemoveCandyArr[i][1]].type = CandyType.nocolor;
+        this.score++;
+      }
+      console.log(this.score)
+      setTimeout(() => {
+        this.shiftCandy();
+      }, 1500);
+    } else if (this.turns == 0) {
+      if (this.score >= this.scoreToBeat) {
+        this.showDialog();
+      } else {
+        this.showDialog();
+      }
+    }
+  }
+  public wait(ms) {
+    var start = Date.now(),
       now = start;
-  while (now - start < ms) {
-    now = Date.now();
+    while (now - start < ms) {
+      now = Date.now();
+    }
   }
-}
+  showDialog() {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '450px',
+      height: '200px'
+    });
+
+  }
 }
 
 
