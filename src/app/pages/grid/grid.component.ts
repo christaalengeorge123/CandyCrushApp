@@ -9,6 +9,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Title } from '@angular/platform-browser';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { DialoglooseComponent } from '../dialogloose/dialogloose.component';
 import {
   trigger,
   state,
@@ -17,6 +18,7 @@ import {
   transition,
   keyframes
 } from '@angular/animations';
+import { timeout } from 'q';
 
 @Component({
   selector: 'app-grid',
@@ -116,6 +118,8 @@ export class GridComponent implements OnInit {
       }
     }
     this.checkGrid();
+   // this.showDialogloose();
+    
   }
 
   onSwipeLeft(event, candy: Candy) {
@@ -144,7 +148,7 @@ export class GridComponent implements OnInit {
       console.log(this.turns)
       setTimeout(() => {
         this.shiftCandy();
-      }, 500);
+      }, 600);
     }
 
   }
@@ -174,7 +178,7 @@ export class GridComponent implements OnInit {
       this.turns--
       setTimeout(() => {
         this.shiftCandy();
-      }, 500);
+      }, 600);
     }
   }
 
@@ -205,7 +209,7 @@ export class GridComponent implements OnInit {
       this.turns--
       setTimeout(() => {
         this.shiftCandy();
-      }, 500);
+      }, 600);
     }
   }
   onSwipeDown(event, candy: Candy) {
@@ -238,7 +242,7 @@ export class GridComponent implements OnInit {
       this.turns--
       setTimeout(() => {
         this.shiftCandy();
-      }, 500);
+      }, 600);
     }
   }
 
@@ -512,7 +516,7 @@ export class GridComponent implements OnInit {
       if (this.score >= this.scoreToBeat) {
         this.showDialog();
       } else {
-        this.showDialog();
+        this.showDialogloose();
       }
     }
   }
@@ -526,6 +530,12 @@ export class GridComponent implements OnInit {
   showDialog() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+
+  }
+  showDialogloose() {
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(DialoglooseComponent, dialogConfig);
+   
 
   }
 }
