@@ -14,11 +14,11 @@
       <div class="board-wrapper">
         <div class="grid_box board-rows">
          <div class="level1">
-            <button type="submit" class="button is-danger">Level1</button>
+            <button type="submit" [routerLink]="['./grid']"  [queryParams]="{matrix: 6}" class="button is-danger">Level1</button>
          </div>
         
          <div class="level2">
-            <button type="submit" class="button is-danger">Level2</button>
+            <button type="submit" [routerLink]="['./grid']"  [queryParams]="{matrix: 8}" class="button is-danger">Level2</button>
          </div>
          <div class="level3">
             <button type="submit" class="button is-danger">Level3</button>

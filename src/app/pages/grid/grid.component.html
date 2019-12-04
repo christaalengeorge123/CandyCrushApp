@@ -26,7 +26,8 @@
       <div class="board-wrapper">
 
       </div>
-      <div class="grid_box board-rows">
+      <div class="grid_box board-rows"  [style.width.px]="size" 
+      [style.height.px]="size">
         <div>
           <div class="grid_row" *ngFor="let candyRow of board.grid">
 

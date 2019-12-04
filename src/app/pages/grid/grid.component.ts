@@ -10,6 +10,8 @@ import { Title } from '@angular/platform-browser';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DialoglooseComponent } from '../dialogloose/dialogloose.component';
+import { ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import {
   trigger,
   state,
@@ -83,9 +85,11 @@ export class GridComponent implements OnInit {
   board: Board = new Board([])
   numOfRows: number = 6
   numOfColumns: number = 6
+  matrix: string;
+  size:number;
 
   constructor(
-    private titleService: Title, public dialog: MatDialog
+    private titleService: Title, public dialog: MatDialog, private route: ActivatedRoute
 
   ) {
     this.titleService.setTitle('CandyCrush');
@@ -109,6 +113,19 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.matrix = this.route.snapshot.queryParamMap.get("matrix")
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.matrix = queryParams.get("matrix")
+    })
+    // this.matrix = this.route.snapshot.paramMap.get("matrix")
+    console.log("matrix is" + this.matrix); // popular
+    var y = +this.matrix;
+    this.size=(y*60)+((y*5)-5)
+    this.numOfRows=y;
+    this.numOfColumns=y;
+
+
     for (var row = 0; row < this.numOfRows; row++) {
       this.board.grid[row] = []
       for (var column = 0; column < this.numOfColumns; column++) {
@@ -118,8 +135,9 @@ export class GridComponent implements OnInit {
       }
     }
     this.checkGrid();
-   // this.showDialogloose();
-    
+    // this.showDialogloose();
+
+
   }
 
   onSwipeLeft(event, candy: Candy) {
@@ -520,7 +538,7 @@ export class GridComponent implements OnInit {
       } else {
         this.showDialogloose();
       }
-    }else this.checkValidGrid();
+    } else this.checkValidGrid();
   }
   public wait(ms) {
     var start = Date.now(),
@@ -529,126 +547,126 @@ export class GridComponent implements OnInit {
       now = Date.now();
     }
   }
-  public checkValidGrid(){
+  public checkValidGrid() {
 
     //check each candy
-    for(let i = 0; i < this.numOfRows; i++){
-      for(let j = 0; j < this.numOfColumns; j++){
-  
+    for (let i = 0; i < this.numOfRows; i++) {
+      for (let j = 0; j < this.numOfColumns; j++) {
+
         //checks if there is a candy adjacent and if so, if there is any candy that can be moved on the other side
         //to make a 3 in a row
-  
+
         //adjacent is right so checks candies left
-        if(j+1 < this.numOfColumns){
-          if(this.board.grid[i][j+1].type == this.board.grid[i][j].type){
-            if(j-2 >= 0){
-              if(this.board.grid[i][j-2].type == this.board.grid[i][j].type){
+        if (j + 1 < this.numOfColumns) {
+          if (this.board.grid[i][j + 1].type == this.board.grid[i][j].type) {
+            if (j - 2 >= 0) {
+              if (this.board.grid[i][j - 2].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i - 1 >= 0 && j-1 >= 0){
-              if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type){
+            if (i - 1 >= 0 && j - 1 >= 0) {
+              if (this.board.grid[i - 1][j - 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i+1 < this.numOfRows && j-1 >=0){
-              if(this.board.grid[i+1][j-1].type == this.board.grid[i][j].type){
+            if (i + 1 < this.numOfRows && j - 1 >= 0) {
+              if (this.board.grid[i + 1][j - 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
           }
         }
         //adjacent is left so checks candies right
-        if(j-1>=0){
-          if(this.board.grid[i][j-1].type == this.board.grid[i][j].type){
-            if(j+2 < this.numOfColumns){
-              if(this.board.grid[i][j+2].type == this.board.grid[i][j].type){
+        if (j - 1 >= 0) {
+          if (this.board.grid[i][j - 1].type == this.board.grid[i][j].type) {
+            if (j + 2 < this.numOfColumns) {
+              if (this.board.grid[i][j + 2].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i-1 >=0 && j+1 < this.numOfColumns){
-              if(this.board.grid[i-1][j+1].type == this.board.grid[i][j].type){
+            if (i - 1 >= 0 && j + 1 < this.numOfColumns) {
+              if (this.board.grid[i - 1][j + 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i+1 < this.numOfRows && j+1 < this.numOfColumns){
-              if(this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+            if (i + 1 < this.numOfRows && j + 1 < this.numOfColumns) {
+              if (this.board.grid[i + 1][j + 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
           }
         }
         //adjacent is below so checks candies above
-        if(i+1 < this.numOfRows){
-          if(this.board.grid[i+1][j].type == this.board.grid[i][j].type){
-            if(i-2 >= 0){
-              if(this.board.grid[i-2][j].type == this.board.grid[i][j].type){
+        if (i + 1 < this.numOfRows) {
+          if (this.board.grid[i + 1][j].type == this.board.grid[i][j].type) {
+            if (i - 2 >= 0) {
+              if (this.board.grid[i - 2][j].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i-1 >= 0 && j-1 >= 0){
-              if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type){
+            if (i - 1 >= 0 && j - 1 >= 0) {
+              if (this.board.grid[i - 1][j - 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i-1 >= 0 && j+1 < this.numOfColumns){
-              if(this.board.grid[i-1][j+1].type == this.board.grid[i][j].type){
+            if (i - 1 >= 0 && j + 1 < this.numOfColumns) {
+              if (this.board.grid[i - 1][j + 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
           }
         }
         //adjacent is above so checks candies below
-        if(i-1>=0){
-          if(this.board.grid[i-1][j].type == this.board.grid[i][j].type){
-            if(i+2 < this.numOfRows){
-              if(this.board.grid[i+2][j].type == this.board.grid[i][j].type){
+        if (i - 1 >= 0) {
+          if (this.board.grid[i - 1][j].type == this.board.grid[i][j].type) {
+            if (i + 2 < this.numOfRows) {
+              if (this.board.grid[i + 2][j].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i+1 < this.numOfRows && j-1 >= 0){
-              if(this.board.grid[i+1][j-1].type == this.board.grid[i][j].type){
+            if (i + 1 < this.numOfRows && j - 1 >= 0) {
+              if (this.board.grid[i + 1][j - 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
-            if(i+1 < this.numOfRows && j+1 < this.numOfColumns){
-              if(this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+            if (i + 1 < this.numOfRows && j + 1 < this.numOfColumns) {
+              if (this.board.grid[i + 1][j + 1].type == this.board.grid[i][j].type) {
                 return
               }
             }
           }
         }
-  
+
         //checks to see if candy can be moved between two candies to make a 3 in a row
-  
+
         //above
-        if(i-1 >= 0){
-          if(j-1 >= 0 && j+1 < this.numOfColumns){
-            if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type && this.board.grid[i-1][j+1].type == this.board.grid[i][j].type){
+        if (i - 1 >= 0) {
+          if (j - 1 >= 0 && j + 1 < this.numOfColumns) {
+            if (this.board.grid[i - 1][j - 1].type == this.board.grid[i][j].type && this.board.grid[i - 1][j + 1].type == this.board.grid[i][j].type) {
               return
             }
           }
         }
         //below
-        if(i+1 < this.numOfRows){
-          if(j-1 >= 0 && j+1 < this.numOfColumns){
-            if(this.board.grid[i+1][j-1].type == this.board.grid[i][j].type && this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+        if (i + 1 < this.numOfRows) {
+          if (j - 1 >= 0 && j + 1 < this.numOfColumns) {
+            if (this.board.grid[i + 1][j - 1].type == this.board.grid[i][j].type && this.board.grid[i + 1][j + 1].type == this.board.grid[i][j].type) {
               return
             }
           }
         }
         //left
-        if(j-1 >= 0){
-          if(i-1 >= 0 && i+1 < this.numOfRows){
-            if(this.board.grid[i-1][j-1].type == this.board.grid[i][j].type && this.board.grid[i+1][j-1].type == this.board.grid[i][j].type){
+        if (j - 1 >= 0) {
+          if (i - 1 >= 0 && i + 1 < this.numOfRows) {
+            if (this.board.grid[i - 1][j - 1].type == this.board.grid[i][j].type && this.board.grid[i + 1][j - 1].type == this.board.grid[i][j].type) {
               return
             }
           }
         }
         //right
-        if(j+1 < this.numOfColumns){
-          if(i-1 >= 0 && i+1 < this.numOfRows){
-            if(this.board.grid[i-1][j+1].type == this.board.grid[i][j].type && this.board.grid[i+1][j+1].type == this.board.grid[i][j].type){
+        if (j + 1 < this.numOfColumns) {
+          if (i - 1 >= 0 && i + 1 < this.numOfRows) {
+            if (this.board.grid[i - 1][j + 1].type == this.board.grid[i][j].type && this.board.grid[i + 1][j + 1].type == this.board.grid[i][j].type) {
               return
             }
           }
@@ -658,37 +676,37 @@ export class GridComponent implements OnInit {
     alert("no more moves available")
     this.colorScramble();
   }
-  
-  public colorScramble(){
+
+  public colorScramble() {
     var colorDict = {}
-  
+
     //records the number of each color
-    for(var i = 0; i < this.numOfRows; i++){
-      for(var j = 0; j < this.numOfColumns; j++){
-        if(isNaN(colorDict[this.board.grid[i][j].type])){
+    for (var i = 0; i < this.numOfRows; i++) {
+      for (var j = 0; j < this.numOfColumns; j++) {
+        if (isNaN(colorDict[this.board.grid[i][j].type])) {
           colorDict[this.board.grid[i][j].type] = 1;
-        }else{
-          colorDict[this.board.grid[i][j].type] +=1;
+        } else {
+          colorDict[this.board.grid[i][j].type] += 1;
         }
       }
     }
-  
+
     //replaces candies with other candies
-    for(var i = 0; i < this.numOfRows; i++){
-      for(var j = 0; j < this.numOfColumns; j++){
+    for (var i = 0; i < this.numOfRows; i++) {
+      for (var j = 0; j < this.numOfColumns; j++) {
         var done = false;
-        while(done == false){
-          var color:CandyType = this.getRandomCandy();
-          if(colorDict[color] > 0){
+        while (done == false) {
+          var color: CandyType = this.getRandomCandy();
+          if (colorDict[color] > 0) {
             this.board.grid[i][j].type = color;
-            colorDict[color] -=1;
+            colorDict[color] -= 1;
             done = true;
           }
         }
       }
     }
     this.checkGrid()
-  
+
   }
 
 
@@ -700,15 +718,15 @@ export class GridComponent implements OnInit {
   showDialogloose() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(DialoglooseComponent, dialogConfig);
-   }
-   public slideDown(x:number, y:number){
-    var temp:string =  x.toString() + y.toString()
+  }
+  public slideDown(x: number, y: number) {
+    var temp: string = x.toString() + y.toString()
     console.log(temp)
     document.getElementById(temp).animate([
-      {transform: 'translateY(-75%)'},
-      { transform: 'translateY(0%)'}
-    ],{
-    duration: 600
+      { transform: 'translateY(-75%)' },
+      { transform: 'translateY(0%)' }
+    ], {
+      duration: 600
     });
   }
 }

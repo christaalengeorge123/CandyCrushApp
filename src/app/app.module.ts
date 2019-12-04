@@ -15,6 +15,7 @@ import { MapComponent } from './pages/map/map.component';
 
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { DialogComponent } from './pages/dialog/dialog.component';
+import { DialoglooseComponent } from './pages/dialogloose/dialogloose.component';
 
 
 export class MyHammerConfig extends HammerGestureConfig {
@@ -31,6 +32,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     GridComponent,
     MapComponent,
     DialogComponent,
+    DialoglooseComponent,
     
   ],
   imports: [
@@ -42,7 +44,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatDialogModule
   ],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    DialoglooseComponent
   ],
   providers: [
     {provide: HAMMER_GESTURE_CONFIG,

@@ -20,6 +20,14 @@ const routes: Routes = [
   {
     path:'grid/map',
     component:MapComponent
+  },
+  {
+    path:'map',
+    component:MapComponent
+  },
+  {
+    path:'map/grid',
+    component:GridComponent
   }
 ];
 
