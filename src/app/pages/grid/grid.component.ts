@@ -87,6 +87,7 @@ export class GridComponent implements OnInit {
   numOfColumns: number = 6
   matrix: string;
   size:number;
+  gameEnd: boolean=false;
 
   constructor(
     private titleService: Title, public dialog: MatDialog, private route: ActivatedRoute
@@ -533,11 +534,14 @@ export class GridComponent implements OnInit {
         this.shiftCandy();
       }, 600);
     } else if (this.turns == 0) {
+      if(this.gameEnd==false){
+        this.gameEnd=true;
       if (this.score >= this.scoreToBeat) {
         this.showDialog();
       } else {
         this.showDialogloose();
       }
+    }
     } else this.checkValidGrid();
   }
   public wait(ms) {
